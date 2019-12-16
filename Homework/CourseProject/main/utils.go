@@ -61,7 +61,7 @@ func longIntToShortLink(index int64) string {
 	return shortLink
 }
 
-var dictionary string = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ#$"
+var dictionary = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ#$"
 
 func generateShortLink(length int) string {
 	//生成length长64进制的短链接

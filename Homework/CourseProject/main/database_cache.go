@@ -1,11 +1,12 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
-	"time"
-	"math/rand"
 	"github.com/garyburd/redigo/redis"
 	_ "github.com/go-sql-driver/mysql"
+	"math/rand"
+	"time"
 )
 
 func longLinkToShortLink(longLink string) string {
@@ -13,7 +14,7 @@ func longLinkToShortLink(longLink string) string {
 	rand.Seed(time.Now().Unix())
 	shortLink := generateShortLink(6)
 	db, _ := sql.Open("mysql", "root:1234567@tcp(3.92.33.121:3306)/link?charset=utf8")
-	_, _ = db.Query("insert into link_table (short_link, long_link) values (?, ?);", shortLink, longLink)
+	_, _ = db.Query("insert into link_table (shortLink, longLink) values (?, ?);", shortLink, longLink)
 	_ = db.Close()
 	return shortLink
 }
@@ -23,14 +24,15 @@ func shortLinkToLongLink(shortLink string) string {
 	c, err := redis.Dial("tcp", "3.92.33.121:6379")
 	if err != nil {
 		fmt.Println("Connect to redis error", err)
-		return
+		return ""
 	}
 	defer c.Close()
 	longLink, err := redis.String(c.Do("GET", shortLink))
-	if err != nil {
+
+	if longLink == "" {
 		//redis中没有，去mysql拿
 		db, _ := sql.Open("mysql", "root:1234567@tcp(3.92.33.121:3306)/link?charset=utf8")
-		row:= db.QueryRow("select long_link from link_table where shortLink = ? limit 1;", shortLink)
+		row:= db.QueryRow("select longLink from link_table where shortLink = ? limit 1;", shortLink)
 		_ = row.Scan(&longLink)
 		_ = db.Close()
 
