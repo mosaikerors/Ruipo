@@ -1,8 +1,6 @@
 package main
 
 import "fmt"
-import "math/rand"
-// import "time"
 
 // transform a string composed of 0-9a-zA-Z?! to a int64
 func shortLinkToLongInt(shortLink string) int64 {
@@ -59,16 +57,4 @@ func longIntToShortLink(index int64) string {
 		index = index >> 6
 	}
 	return shortLink
-}
-
-var dictionary = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ#$"
-
-func generateShortLink(length int) string {
-	//生成length长64进制的短链接
-	var res string
-	for	i:= 0;i<length;i++ {
-		rnd := rand.Intn(64)
-		res = fmt.Sprintf("%s%c",res,dictionary[rnd])
-	}
-	return res
 }
