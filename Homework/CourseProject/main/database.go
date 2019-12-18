@@ -2,8 +2,10 @@ package main
 
 import (
 	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
+	"fmt"
+	"github.com/garyburd/redigo/redis"
 	_ "github.com/garyburd/redigo/redis"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func longLinkToShortLink(longLink string) string {
@@ -35,7 +37,7 @@ func shortLinkToLongLink(shortLink string) string {
 	c, err := redis.Dial("tcp", "3.91.25.91:6379")
 	if err != nil {
 		fmt.Println("Connect to redis error", err)
-		return
+		return ""
 	}
 	defer c.Close()
 	longLink, _ := redis.String(c.Do("GET", shortLink))
