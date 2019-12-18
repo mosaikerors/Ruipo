@@ -33,10 +33,10 @@ func shortLinkToLongInt(shortLink string) int64 {
 
 // transform  an int64 to a string composed of 0-9a-zA-Z?!
 func longIntToShortLink(index int64) string {
-	if index == 0 {
-		return "0"
-	}
 	var shortLink string
+	if index == 0{
+		shortLink = "0"
+	}
 	for index != 0 {
 		ch := index - (index>>6)<<6
 		if ch >= 0 && ch < 10 {
@@ -56,5 +56,10 @@ func longIntToShortLink(index int64) string {
 		}
 		index = index >> 6
 	}
+
+	for len(shortLink) < 6 {
+		shortLink = fmt.Sprintf("%d%s", 0, shortLink)
+	}
+
 	return shortLink
 }

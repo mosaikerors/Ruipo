@@ -24,8 +24,8 @@ type RedisConfig struct {
 func parseConfig()  {
 	data, _ := ioutil.ReadFile("config.yml")
 	t := MyConfig{}
-	//把yaml形式的字符串解析成struct类型
-	yaml.Unmarshal(data, &t)
+	//turn yaml into struct
+	_ = yaml.Unmarshal(data, &t)
 	mysqlConfig = fmt.Sprintf("%s:%s@tcp(%s)/shortlink?charset=utf8",
 		t.Mysql.Username, t.Mysql.Password, t.Mysql.Ipport)
 	redisConfig = t.Redis.Ipport

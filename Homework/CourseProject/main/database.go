@@ -2,8 +2,8 @@ package main
 
 import (
 	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/garyburd/redigo/redis"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func longLinkToShortLink(longLink string) string {
