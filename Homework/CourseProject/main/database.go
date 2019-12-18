@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/garyburd/redigo/redis"
 )
 
 func longLinkToShortLink(longLink string) string {
@@ -27,16 +28,27 @@ func longLinkToShortLink(longLink string) string {
 }
 
 func shortLinkToLongLink(shortLink string) string {
-
-	var longLink string
 	// convert short link to index
 	linkIndex := shortLinkToLongInt(shortLink)
-	// open mysql
-	db, _ := sql.Open("mysql",
-		"root:123456@tcp(3.91.25.91:3306)/shortlink?charset=utf8")
-	// select by link index
-	row:= db.QueryRow("select long_link from link where link_index = ? limit 1;", linkIndex)
-	_ = row.Scan(&longLink)
-	_ = db.Close()
+
+	// check if redis has cached it
+	c, err := redis.Dial("tcp", "3.91.25.91:6379")
+	if err != nil {
+		fmt.Println("Connect to redis error", err)
+		return
+	}
+	defer c.Close()
+	longLink, _ := redis.String(c.Do("GET", shortLink))
+
+	if longLink == "" {
+		// open mysql
+		db, _ := sql.Open("mysql", "root:123456@tcp(3.91.25.91:3306)/shortlink?charset=utf8")
+		// select by link index
+		row:= db.QueryRow("select long_link from link where link_index = ? limit 1;", linkIndex)
+		_ = row.Scan(&longLink)
+		_ = db.Close()
+		//insert to redis
+		_, err = c.Do("SET", linkIndex, longLink)
+	}
 	return longLink
 }
