@@ -1,6 +1,6 @@
 ## 数据库
 
-### 构建数据库
+### 构建MYSQL数据库
 
 ```shell
 cd database
@@ -10,10 +10,16 @@ cd database
 docker build -t mysql_docker .
 ```
 
-### 运行数据库
+### 运行MYSQL数据库
 
 ```shell
 docker run -itd --name shortlink_mysql  -p 3306:3306 mysql_docker
+```
+
+### 构建运行REDIS数据库
+
+```shell
+docker run -p 6379:6379 -d redis:latest redis-server
 ```
 
 ## 服务
