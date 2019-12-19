@@ -8,7 +8,7 @@ import (
 
 type linkIndex2LongLinkPair struct {
 	linkIndex int64
-	longLink string
+	longLink  string
 }
 
 var insertRedisChannel chan linkIndex2LongLinkPair
