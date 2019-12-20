@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
+
+	"gopkg.in/yaml.v2"
 )
 
 type MyConfig struct {
@@ -12,17 +13,17 @@ type MyConfig struct {
 }
 
 type MysqlConfig struct {
-	Ipport    string
+	Ipport   string
 	Username string
 	Password string
 }
 
 type RedisConfig struct {
-	Ipport    string
+	Ipport string
 }
 
-func parseConfig()  {
-	data, _ := ioutil.ReadFile("config.yml")
+func parseConfig() {
+	data, _ := ioutil.ReadFile("./config/config.yml")
 	t := MyConfig{}
 	//turn yaml into struct
 	_ = yaml.Unmarshal(data, &t)

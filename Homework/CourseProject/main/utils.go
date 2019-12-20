@@ -34,7 +34,7 @@ func shortLinkToLongInt(shortLink string) int64 {
 // transform  an int64 to a string composed of 0-9a-zA-Z?!
 func longIntToShortLink(index int64) string {
 	var shortLink string
-	if index == 0{
+	if index == 0 {
 		shortLink = "0"
 	}
 	for index != 0 {
