@@ -1,6 +1,6 @@
 mysql:
-    ipport: 3.91.25.91:3306
+    ipport: 47.103.0.246:3307
     username: root
     password: 123456
 redis:
-    ipport: 3.91.25.91:6379
+    ipport: 47.103.0.246:6379
