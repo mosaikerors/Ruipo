@@ -31,6 +31,22 @@
       docker run -itd --name shortlink_server  -p 9090:9090 server_docker
       ```
 
+## docker使用
+
+- 数据库
+    ```shell
+    docker pull zinuo/shortlink_mysql:v1
+    ```
+    ```shell
+    docker pull zinuo/redis:v1
+    ```
+
+- 服务
+    ```shell
+    docker pull shortlink_server:v2
+    ```
+    **注意：**
+    在部署服务时，需要用本地配置文件覆盖镜像内的配置文件，镜像内的配置文件为`/root/config/config.yml`
 ## 测试
 
 注意事项
@@ -46,5 +62,5 @@ curl -X POST http://ip:9090/long?long_link=[your long link]
 ### 短链接 -> 长链接
 
 ```shell
-curl -X POST http://ip:9090/short?short_link=[your short link]
+curl -X GET http://ip:9090/short?short_link=[your short link]
 ```
