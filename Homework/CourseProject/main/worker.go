@@ -1,12 +1,13 @@
 package main
 
-import "github.com/garyburd/redigo/redis"
+import (
+	"fmt"
+)
 
-func insertToRedis()  {
-	c, _ := redis.Dial("tcp", redisConfig)
+func insertToRedis() {
 	for true {
-		pair := <- insertRedisChannel
-		_, _ = c.Do("SET", pair.linkIndex, pair.longLink)
+		pair := <-insertRedisChannel
+		fmt.Println(pair.linkIndex)
+		_, _ = cluster.Do("SET", pair.linkIndex, pair.longLink)
 	}
-	c.Close()
 }
