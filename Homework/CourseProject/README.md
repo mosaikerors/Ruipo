@@ -35,7 +35,7 @@
 
 - 数据库
     ```shell
-    docker pull zinuo/shortlink_mysql:v1
+    docker pull zinuo/shortlink_mysql:v3
     ```
     ```shell
     docker pull zinuo/redis:v1
@@ -43,7 +43,7 @@
 
 - 服务
     ```shell
-    docker pull shortlink_server:v2
+    docker pull shortlink_server:v3
     ```
     **注意：**
     在部署服务时，需要用本地配置文件覆盖镜像内的配置文件，镜像内的配置文件为`/root/config/config.yml`
